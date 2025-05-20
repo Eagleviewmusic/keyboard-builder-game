@@ -230,4 +230,32 @@ body {
   .bar { font-size: 1.06rem; }
   #message-box { padding: 15px; font-size: 1rem; }
   #start-container { padding: 16px 3vw; }
+} /* Mode button group for centering and spacing */
+.mode-btn-group {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+/* Mode Buttons - styled like #start-btn and #submit-btn */
+.mode-btn {
+  padding: 16px 36px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
+  color: #333;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.09);
+  transition: background 0.18s, transform 0.14s;
+}
+
+.mode-btn:hover,
+.mode-btn:focus {
+  background: linear-gradient(90deg, #ffcc33 0%, #ffb347 100%);
+  transform: scale(1.06);
+  outline: 2.5px solid #ffd700aa;
 }
