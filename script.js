@@ -207,6 +207,7 @@ function stopTimer() {
 
 // Shuffle and reset to start screen
 function shuffleAndReset() {
+ stopTimer();
   initScale();
   createBars();
   messageBox.style.display = 'none';
