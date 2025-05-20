@@ -1,7 +1,8 @@
 // script.js
 // Element references
 const refreshBtn   = document.getElementById('refresh-btn');
-const startBtn     = document.getElementById('start-btn');
+const easyBtn      = document.getElementById('easy-btn');   // NEW
+const hardBtn      = document.getElementById('hard-btn');   // NEW
 const submitBtn    = document.getElementById('submit-btn');
 const timerEl      = document.getElementById('timer');
 const messageBox   = document.getElementById('message-box');
@@ -18,6 +19,7 @@ const VERTICAL_GAP   = 10; // gap between bars and submit button
 // Dynamic vars
 let notes = [], answerOrder = [], dropOrder = [];
 let currentBarW = DEFAULT_WIDTH, currentBarH = DEFAULT_HEIGHT;
+let gameMode = 'hard'; // "easy" or "hard"
 
 // Timer
 let timerInterval, startTime;
@@ -69,7 +71,12 @@ function shuffleArray(arr) {
 
 // Initialize the scale and randomized notes
 function initScale() {
-  const root = naturalScale[Math.floor(Math.random() * naturalScale.length)];
+  let root;
+  if (gameMode === "easy") {
+    root = "C"; // Always C in easy mode
+  } else {
+    root = naturalScale[Math.floor(Math.random() * naturalScale.length)];
+  }
   answerOrder = [];
   const startIndex = naturalScale.indexOf(root);
   for (let i = 0; i < naturalScale.length; i++) {
@@ -201,13 +208,16 @@ function startTimer() {
 
 // Stop the timer
 function stopTimer() {
-  clearInterval(timerInterval);
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
   updateTimer();
 }
 
 // Shuffle and reset to start screen
 function shuffleAndReset() {
- stopTimer();
+  stopTimer(); // Always clear the timer on refresh/reset!
   initScale();
   createBars();
   messageBox.style.display = 'none';
@@ -257,10 +267,18 @@ window.addEventListener('resize', () => {
 
 // Event listeners
 refreshBtn.addEventListener('click', shuffleAndReset);
-startBtn.addEventListener('click', () => {
+
+easyBtn.addEventListener('click', () => {
+  gameMode = 'easy';
   startScreen.style.display = 'none';
   startTimer();
 });
+hardBtn.addEventListener('click', () => {
+  gameMode = 'hard';
+  startScreen.style.display = 'none';
+  startTimer();
+});
+
 submitBtn.addEventListener('click', () => {
   stopTimer();
   const correct = dropOrder.length === answerOrder.length
